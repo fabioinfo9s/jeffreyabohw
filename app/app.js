@@ -1,7 +1,7 @@
 // app.js
 var express = require('express');
 var app = express();
-//var db = require('./db');
+var db = require('./db');
 var cors = require('cors');
 var bodyParser = require('body-parser');
 const basicAuth = require('express-basic-auth')
@@ -47,8 +47,8 @@ app.set('view engine', 'jade');
 
 // ROUTES STARTS
 
-// var ArtisanController = require('./artisan/ArtisanController');
-// app.use('/api/v1/artisan', ArtisanController);
+var ArtisanController = require('./artisan/ArtisanController');
+app.use('/api/v1/artisan', ArtisanController);
 // var ArtisanController = require('./artisan/ArtisanController');
 // app.use('/api/v1/professional', ArtisanController);
 // var AuthController = require('./auth/AuthController');
