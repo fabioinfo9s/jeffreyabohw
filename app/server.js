@@ -8,7 +8,7 @@ app.use('/', function(req, res) {
     res.status(200).send('KeyedIn API Server is Running');
 });
 
-// Starting Server
+// Starting API Server
 var server = http.listen(port, function() {
  console.log('KeyedIn API Server listening on port ' + port);
 });
