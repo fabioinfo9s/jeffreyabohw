@@ -4,7 +4,8 @@
   "description": "API server backend for keyedIn",
   "main": "app/server.js",
   "scripts": {
-    "test": "nodemon app/server.js"
+    "test": "nodemon app/server.js",
+    "start": "node app/server.js"
   },
   "author": "Jeffrey Aboh",
   "license": "ISC",
