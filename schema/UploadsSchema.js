@@ -1,0 +1,17 @@
+// Schema for MongoDB
+var mongoose = require('mongoose');  
+
+var UploadsSchema = new mongoose.Schema({  
+    id: Number,
+    user_id: Number,
+    image: String,
+    type: String,
+    featured: Boolean,
+    hide: Boolean,
+
+},
+{
+    timestamps: true
+});
+mongoose.model('uploads', UploadsSchema);
+module.exports = mongoose.model('uploads');

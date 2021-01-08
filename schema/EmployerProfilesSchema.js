@@ -1,0 +1,14 @@
+// Schema for MongoDB
+var mongoose = require('mongoose');  
+
+var EmployerProfilesSchema = new mongoose.Schema({  
+    id: Number,
+    user_id: Number,
+    description: String,
+
+},
+{
+    timestamps: true
+});
+mongoose.model('employer_profiles', EmployerProfilesSchema);
+module.exports = mongoose.model('employer_profiles');
