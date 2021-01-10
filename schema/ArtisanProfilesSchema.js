@@ -15,6 +15,8 @@ var ArtisanProfilesSchema = new mongoose.Schema({
     guarantor_name: String,
     guarantor_address: String,
     guarantor_identity: String,
+    payment_mode: { type: String, enum: ['fixed', 'flexible'] },
+    fixed_amount: Number,
     guarantor_phone: Number,
 },
 {

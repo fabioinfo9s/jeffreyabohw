@@ -6,6 +6,7 @@ var CategoriesSchema = new mongoose.Schema({
     name: String,
     slug: String,
     description: String,
+    background_required: String,
 
 },
 {

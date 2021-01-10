@@ -16,6 +16,18 @@ var WalletFundsSchema = new mongoose.Schema({
     gateway_final_charge_status: String,
     gateway_final_charge_message: String,
     gateway_debit_response: String,
+    identifier: String,
+    success: { type: String, default: false },
+    payment_method: String,
+    payment_gateway: String,
+    payment_gateway_charged_percentage: Number,
+    payment_gateway_expected_charged_percentage: Number,
+    payment_reference: String,
+    payment_gateway_charge: Number,
+    payment_gateway_remittance: Number,
+    payment_code: String,
+    payment_message: String,
+    payment_status: { type: String, default: 'pending' },
 
 },
 {
