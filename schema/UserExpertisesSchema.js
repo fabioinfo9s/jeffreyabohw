@@ -9,6 +9,8 @@ var UserExpertisesSchema = new mongoose.Schema({
     other: String,
     service_category: String,
     skills: String,
+    core_skill: String,
+    category_id: Number,
 
 },
 {
