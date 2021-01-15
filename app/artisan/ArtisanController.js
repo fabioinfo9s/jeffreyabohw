@@ -8,7 +8,7 @@ var artisanSchema = require('../../schema/ArtisanSchema');
 
 
 // Update artisan profile
-router.put('/artisan-profile/:id', (req, res) => {
+router.put('/artisan-profile/:id', (req, res) =>  {
     const user_id = req.params.id;
 
 });
