@@ -4,7 +4,7 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
-var artisanSchema = require('../../schema/ArtisanSchema');
+var artisanProfilesSchema = require('../../schema/ArtisanProfilesSchema');
 
 
 // Update artisan profile
