@@ -1,5 +1,9 @@
 HEROKU URL = https://keyedin.herokuapp.com/
 
+TODO
+
+1. Fix Seeders.
+
 // Schema for MongoDB
 var mongoose = require('mongoose');  
 
