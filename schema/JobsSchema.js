@@ -19,7 +19,7 @@ var JobsSchema = new mongoose.Schema({
     job_mode: { type: String, enum: ['repetitive', 'one-off'] },
     project_scale: { type: String, enum: ['small', 'medium', 'large'] },
     adjustment: { type: String, enum: ['flexible', 'fixed'] },
-    status: { type: String, enum: ['pending', 'closed', 'opened', 'declined', 'accepted', 'settled', 'ongoing'], default: 'pending' },
+    status: { type: String, enum: ['pending', 'closed', 'opened', 'declined', 'accepted', 'settled', 'ongoing', 'completed'], default: 'pending' },
     verified: { type: Boolean, default: false },
     artisan_status: { type: String, enum: ['pending', 'closed', 'opened', 'declined', 'accepted', 'settled', 'ongoing'], default: 'pending' },
     employer_status: { type: String, enum: ['pending', 'closed', 'opened', 'declined', 'accepted', 'settled', 'ongoing'], default: 'pending' },

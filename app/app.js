@@ -47,8 +47,8 @@ app.set('view engine', 'jade');
 
 // ROUTES STARTS
 
-var ArtisanController = require('./artisan/ArtisanController');
-app.use('/api/v1/artisan', ArtisanController);
+// var ArtisanController = require('./artisan/ArtisanController');
+// app.use('/api/v1/artisan', ArtisanController);
 // var ArtisanController = require('./artisan/ArtisanController');
 // app.use('/api/v1/professional', ArtisanController);
 // var AuthController = require('./auth/AuthController');
@@ -75,6 +75,59 @@ app.use('/api/v1/artisan', ArtisanController);
 // app.use('/api/v1/wallet-fund', WalletController);
 
 // ROUTES ENDS
+
+// //  OTP
+//var OTPController = require('../controllers/OTPController');
+//app.use('/api/v1/otp', OTPController);
+
+// SKILLS
+var SkillController = require('../controllers/SkillController');
+app.use('/api/v1/skills', SkillController);
+
+// JOBS
+var JobsController = require('../controllers/JobsController');
+app.use('/api/v1/jobs', JobsController);
+
+// // BILLING
+// var BillingAddressController = require('../controllers/BillingAddressController');
+// app.use('/api/vi/billing-address', BillingAddressController);
+
+// // LOCATION
+// var LocationController = require('../controllers/LocationController');
+// app.use('/api/v1/location', LocationController);
+
+// // CATEGORY
+// var CategoryController = require('../controllers/CategoryController');
+// app.use('/api/v1/category', CategoryController);
+
+// // MEDIA
+// var MediaController = require('../controllers/MediaController');
+// app.use('/api/v1/media', MediaController);
+
+// // GENERAL
+// var GeneralController = require('../controllers/GeneralController');
+// app.use('/api/v1/general', GeneralController);
+
+// // WALLET
+// var WalletController = require('../controllers/WalletController');
+// app.use('/api/v1/wallet', WalletController);
+
+// // AUTH
+// var AuthController = require('../controllers/AuthController');
+// app.use('/api/v1/auth', AuthController);
+
+// // ARTISAN
+// var ArtisanController = require('../controllers/ArtisanController');
+// app.use('/api/v1/artisan', ArtisanController);
+
+// // EMPLOYER
+// var EmployerController = require('../controllers/EmployerController');
+// app.use('/api/v1/employer', EmployerController);
+
+// // PROFESSIONAL
+// var ProfessionalController = require('../controllers/ProfessionalController');
+// app.use('/api/v1/professional', ProfessionalController);
+
 
 
 module.exports = app;

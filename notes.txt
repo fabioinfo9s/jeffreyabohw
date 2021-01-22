@@ -1,5 +1,30 @@
 HEROKU URL = https://keyedin.herokuapp.com/
 
+
+
+
+
+var express = require('express');
+var router = express.Router();
+var bodyParser = require('body-parser');
+router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.json());
+
+
+router.('/', function (req, res) {
+    var data = body.req;
+    if (!data) {
+        res.status(500).send('Empty/Incorrect body request!')
+    } else {
+        
+    }
+})
+
+module.exports = router;
+
+
+
+
 TODO
 
 1. Fix Seeders.
