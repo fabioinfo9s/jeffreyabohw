@@ -313,4 +313,57 @@ router.get('/job-insight', function (req, res) {
     }
 })
 
+router.post('/expertise', function (req, res) {
+
+})
+
+router.put('/expertise', function (req, res) {
+
+})
+
+router.get('/expertise', function (req, res) {
+
+})
+
+router.post('/portfolio', function (req, res) {
+
+})
+
+router.put('/portfolio/:id', function (req, res) {
+
+})
+
+router.get('/portfolio', function (req, res) {
+
+})
+
+router.delete('/portfolio/:id', function (req, res) {
+
+})
+
+router.post('/profile-video', function (req, res) {
+
+})
+
+router.put('/profile-video', function (req, res) {
+
+})
+
+router.get('/profile-video', function (req, res) {
+
+})
+
+router.post('/rate', function (req, res) {
+
+})
+
+router.put('/rate', function (req, res) {
+
+})
+
+router.get('/rate', function (req, res) {
+
+})
+
+
 module.exports = router;
