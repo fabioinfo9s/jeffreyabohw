@@ -11,6 +11,10 @@ var UsersSchema = require('../schema/UsersSchema');
 var ArtisanRatingsSchema = require('../schema/ArtisanRatingsSchema');
 var JobsSchema = require('../schema/JobsSchema');
 var WalletTransactionsSchema = require('../schema/WalletTransactionsSchema');
+var UserExpertiseSchema = require('../schema/UserExpertisesSchema');
+var UserPortfoliosSchema = require('../schema/UserPortfoliosSchema');
+var UserProfileVideosSchema = require('../schema/UserProfileVideosSchema');
+var UserRatesSchema = require('../schema/UserRatesSchema');
 
 
 
@@ -314,55 +318,198 @@ router.get('/job-insight', function (req, res) {
 })
 
 router.post('/expertise', function (req, res) {
-
+    var user_id;
+    var data = req.body;
+    if (!data) {
+        res.status(500).send({ message: 'Missing params/body!' })
+    } else {
+        var postData = new UserExpertiseSchema( data )
+        postData.user_id = user_id;
+        postData.save().then(resolve => {
+            res,status(200).send(resolve)
+        }, reject => {
+            res.status(500).send(reject)
+        })
+    }
 })
 
 router.put('/expertise', function (req, res) {
-
+    var user_id;
+    var data = req.body;
+    if (!data) {
+        res.status(500).send({ message: 'Missing params/body!' })
+    } else {
+        UserExpertiseSchema.findOneAndUpdate({user_id: user_id}, {$set: data}, {new: true}, function (reject, resolve) {
+            if (reject) {
+                res.status(500).send(reject)
+            }
+            if (resolve) {
+                res.status(200).send({ message: 'Expertise Updated successfully!'}) 
+            } 
+        })
+    }
 })
 
 router.get('/expertise', function (req, res) {
-
+    var user_id;
+    if (!user_id) {
+        res.status(500).send({ message: 'User not logged in!' })
+    } else {
+        UserExpertiseSchema.find({user_id: user_id}, function (reject, resolve) {
+            if (reject) {
+                res.status(500).send(reject)
+            }
+            if (resolve) {
+                res.status(200).send(resolve) 
+            }            
+        })
+    }
 })
 
 router.post('/portfolio', function (req, res) {
+    var user_id;
+    if (!user_id) {
+        res.status(500).send({ message: 'User not logged in!' })
+    } else {
 
+    }
 })
 
 router.put('/portfolio/:id', function (req, res) {
+    var user_id = req.params.id;
+    if (!user_id) {
+        res.status(500).send({ message: 'Missing params!' })
+    } else {
 
+    }
 })
 
 router.get('/portfolio', function (req, res) {
-
+    var user_id;
+    if (!user_id) {
+        res.status(500).send({ message: 'Unauthorized!' })
+    } else {
+        UserPortfoliosSchema.find({user_id: user_id}, function (reject, resolve) {
+            if (reject) {
+                res.status(500).send(reject)
+            }
+            if (resolve) {
+                res.status(200).send(resolve) 
+            }   
+        })
+    }    
 })
 
 router.delete('/portfolio/:id', function (req, res) {
-
+    var user_id;
+    if (!user_id) {
+        res.status(500).send({ message: 'Unauthorized!' })
+    } else {
+        UserPortfoliosSchema.findOneAndDelete({user_id: user_id})
+        .then(resolve => {
+            if (!resolve) {
+                return res.status(404).send({ message: 'Portfolio not found!' });
+            } else {
+                return res.status(200).send({ message: 'Portfolio deleted!' });
+            }
+        }, reject => {
+            res.status(500).send(reject);
+        })
+    }
 })
 
 router.post('/profile-video', function (req, res) {
+    var user_id;
+    if (!user_id) {
+        res.status(500).send({ message: 'Unauthorized!' })
+    } else {
 
+    }
 })
 
 router.put('/profile-video', function (req, res) {
+    var user_id;
+    if (!user_id) {
+        res.status(500).send({ message: 'Unauthorized!' })
+    } else {
 
+    }
 })
 
 router.get('/profile-video', function (req, res) {
-
+    var user_id;
+    if (!user_id) {
+        res.status(500).send({ message: 'Unauthorized!' })
+    } else {
+        UserProfileVideosSchema.find({user_id: user_id}, function (reject, resolve) {
+            if (reject) {
+                res.status(500).send(reject)
+            }
+            if (resolve) {
+                res.status(200).send(resolve) 
+            }   
+        })
+    }
 })
 
 router.post('/rate', function (req, res) {
-
+    var user_id;
+    var data = req.body;
+    if (!user_id) {
+        res.status(500).send({ message: 'Unauthorized!' })
+    } else {
+        UserRatesSchema.findOne({user_id: user_id}, function (reject, resolve) {
+            if (reject) {
+                res.status(500).send(reject)
+            }
+            if (resolve) {
+                res.status(200).send({ message: 'Rate already exist' }) 
+            }
+            if (!resolve) {
+                var postData = new UserRatesSchema ( data );
+                postData.user_id = user_id;
+                postData.save()
+                .then(resolve => {
+                    res,status(200).send({ message: 'Rate Created successfully' })
+                }, reject => {
+                    res.status(500).send(reject)
+                })
+            }
+        })
+    }
 })
 
 router.put('/rate', function (req, res) {
-
+    var user_id;
+    var data = req.body;
+    if (!user_id) {
+        res.status(500).send({ message: 'Unauthorized!' })
+    } else {
+        UserRatesSchema.findOneAndUpdate({user_id: user_id}, {$set: data}, {new: true}, function (reject, resolve) {
+            if (reject) {
+                res.status(500).send(reject)
+            }
+            if (resolve) {
+                res.status(200).send(resolve) 
+            }         
+        })
+    }
 })
 
 router.get('/rate', function (req, res) {
-
+    var user_id;
+    if (!user_id) {
+        res.status(500).send({ message: 'Unauthorized!' })
+    } else {
+        UserRatesSchema.find({user_id: user_id}, function (reject, resolve) {
+            if (reject) {
+                res.status(500).send(reject)
+            }
+            if (resolve) {
+                res.status(200).send(resolve) 
+            }              
+        })
+    }
 })
 
 
