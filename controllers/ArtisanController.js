@@ -3,6 +3,7 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
+const {ensureAuthenticated} = require('../config/auth');
 
 // Import Schema
 var ProposalsSchema = require('../schema/ProposalsSchema');
@@ -42,7 +43,7 @@ router.post('/proposal', function (req, res) {
     }
 })
 
-router.get('/proposal', function (req, res) {
+router.get('/proposal', ensureAuthenticated, function (req, res) {
     var user_id;
     if (!user_id) {
         res.status(500).send({ message: 'User not logged in!' })

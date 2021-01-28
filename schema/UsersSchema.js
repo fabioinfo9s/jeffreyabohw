@@ -1,7 +1,11 @@
 // Schema for MongoDB
 var mongoose = require('mongoose');  
+var Schema = mongoose.Schema;
+var ObjectIdSchema = Schema.ObjectId;
+var ObjectId = mongoose.Types.ObjectId;
 
 var UsersSchema = new mongoose.Schema({  
+    _id: ObjectIdSchema,
     id: Number,
     first_name: String,
     last_name: String,

@@ -5,9 +5,22 @@ var db = require('./db');
 var cors = require('cors');
 var bodyParser = require('body-parser');
 const basicAuth = require('express-basic-auth')
+const session = require('express-session');
+const passport = require('passport');
+require('../config/passport')(passport)
 
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
+//express session
+app.use(session ({
+    secret : 'secret',
+    resave : true,
+    saveUninitialized : true
+    })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(cors());
 
@@ -51,8 +64,8 @@ app.set('view engine', 'jade');
 // app.use('/api/v1/artisan', ArtisanController);
 // var ArtisanController = require('./artisan/ArtisanController');
 // app.use('/api/v1/professional', ArtisanController);
-// var AuthController = require('./auth/AuthController');
-// app.use('/api/v1/auth', AuthController);
+var AuthController = require('../controllers/AuthController');
+app.use('/api/v1/auth', AuthController);
 // var BillingController = require('./billing/BillingController');
 // app.use('/api/v1/billing-address', BillingController);
 // var JobCategoryController = require('./category/JobCategoryController');
