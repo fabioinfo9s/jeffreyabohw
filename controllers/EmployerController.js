@@ -19,7 +19,7 @@ var JobAttachmentsSchema = require('../schema/JobAttachmentsSchema');
 // Routes
 
 router.get('/proposal', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     var type;
     if (!user_id || type != 'Employer') {
         res.status(500).send({ message: 'Unauthorized!' })
@@ -70,7 +70,7 @@ router.get('/jobs', function (req, res) {
 })
 
 router.get('/job-offer/all', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     if (!user_id) {
         res.status(500).send({ message: 'Unauthorized!' })
     } else {
@@ -174,7 +174,7 @@ router.post('/get-artisan', function (req, res) {
 })
 
 router.get('/proposals/:count', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     var count = req.params.count;
     if (!count) {
         res.status(500).send({ message: 'Missing params/body!' })
@@ -303,7 +303,7 @@ router.post('/job/attachment/remove', function (req, res) {
 })
 
 router.post('/milestone/create', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     var data = req.body;
     var job_id = data.job_id;
     if (!data) {

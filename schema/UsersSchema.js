@@ -1,12 +1,8 @@
 // Schema for MongoDB
-var mongoose = require('mongoose');  
-var Schema = mongoose.Schema;
-var ObjectIdSchema = Schema.ObjectId;
-var ObjectId = mongoose.Types.ObjectId;
+var mongoose = require('mongoose');
 
 var UsersSchema = new mongoose.Schema({  
-    _id: ObjectIdSchema,
-    id: Number,
+    id: String,
     first_name: String,
     last_name: String,
     type: String,
@@ -15,14 +11,14 @@ var UsersSchema = new mongoose.Schema({
     lng: String,
     lat: String,
     address: String,
-    country_id: Number,
-    state_id: Number,
+    country_id: String,
+    state_id: String,
     phone: String,
     dob: Date,
-    category_id: Number,
+    category_id: String,
     description: String,
     availability: { type: String, enum: ['online', 'offline', 'away', 'holiday', 'not_available'], default: 'online' },
-    city_id: Number,
+    city_id: String,
     national_identity: String,
     government_id: String,
     email_verified_at: { type: Date, default: Date.now },

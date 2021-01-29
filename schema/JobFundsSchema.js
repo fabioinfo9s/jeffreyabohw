@@ -2,8 +2,8 @@
 var mongoose = require('mongoose');  
 
 var JobFundsSchema = new mongoose.Schema({  
-    id: Number,
-    job_id: Number,
+    id: String,
+    job_id: String,
     amount: Number,
     commission: Number,
     status: { type: String, enum: ['onhold', 'settled', 'reverse'], default: 'onhold' },

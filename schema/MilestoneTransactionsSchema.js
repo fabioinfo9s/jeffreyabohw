@@ -2,10 +2,10 @@
 var mongoose = require('mongoose');  
 
 var MilestoneTransactionsSchema = new mongoose.Schema({  
-    id: Number,
+    id: String,
     amount: Number,
     keyedin_profile: Number,
-    milestone_id: Number,
+    milestone_id: String,
     status: String,
     completed: { type: Boolean, default: '0' },
 

@@ -2,8 +2,8 @@
 var mongoose = require('mongoose');  
 
 var SkillSetsSchema = new mongoose.Schema({  
-    id: Number,
-    category_id: Number,
+    id: String,
+    category_id: String,
     name: String,
     slug: String,
     description: String,

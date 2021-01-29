@@ -2,15 +2,15 @@
 var mongoose = require('mongoose');  
 
 var UserExpertisesSchema = new mongoose.Schema({  
-    id: Number,
-    user_id: Number,
+    id: String,
+    user_id: String,
     bio: String,
     level: String,
     other: String,
     service_category: String,
     skills: String,
     core_skill: String,
-    category_id: Number,
+    category_id: String,
 
 },
 {

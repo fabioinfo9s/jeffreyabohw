@@ -2,9 +2,9 @@
 var mongoose = require('mongoose');  
 
 var UserWalletsSchema = new mongoose.Schema({  
-    id: Number,
-    user_id: Number,
-    country_id: Number,
+    id: String,
+    user_id: String,
+    country_id: String,
     available_balance: Number,
     total_balance: Number,
 

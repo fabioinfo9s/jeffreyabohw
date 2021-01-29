@@ -2,8 +2,8 @@
 var mongoose = require('mongoose');  
 
 var UserProfileVideosSchema = new mongoose.Schema({  
-    id: Number,
-    user_id: Number,
+    id: String,
+    user_id: String,
     profile_video: String,
 
 },

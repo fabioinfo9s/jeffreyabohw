@@ -2,8 +2,8 @@
 var mongoose = require('mongoose');  
 
 var VideoUploadsSchema = new mongoose.Schema({  
-    id: Number,
-    user_id: Number,
+    id: String,
+    user_id: String,
     type: String,
     title: String,
     description: String,

@@ -2,9 +2,9 @@
 var mongoose = require('mongoose');  
 
 var JobsSchema = new mongoose.Schema({  
-    id: Number,
-    user_id: Number,
-    category_id: Number,
+    id: String,
+    user_id: String,
+    category_id: String,
     skill_set_id: String,
     title: String,
     description: String,
@@ -15,7 +15,7 @@ var JobsSchema = new mongoose.Schema({
     lng: Number,
     lat: Number,
     milestone_needed: { type: Boolean, default: false },
-    user_artisan_id: Number,
+    user_artisan_id: String,
     job_mode: { type: String, enum: ['repetitive', 'one-off'] },
     project_scale: { type: String, enum: ['small', 'medium', 'large'] },
     adjustment: { type: String, enum: ['flexible', 'fixed'] },

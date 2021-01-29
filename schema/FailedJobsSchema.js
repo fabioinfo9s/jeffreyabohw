@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');  
 
 var FailedJobsSchema = new mongoose.Schema({  
-    id: Number,
+    id: String,
     connection: String,
     queue: String,
     payload: String,

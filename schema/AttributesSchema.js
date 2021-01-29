@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');  
 
 var AttributesSchema = new mongoose.Schema({  
-    id: Number,
+    id: String,
     description: String,
 
 },

@@ -2,12 +2,12 @@
 var mongoose = require('mongoose');  
 
 var CitiesSchema = new mongoose.Schema({  
-    id: Number,
+    id: String,
     name: String,
     lat: String,
     lng: String,
-    state_id: Number,
-    country_id: Number,
+    state_id: String,
+    country_id: String,
 
 },
 {

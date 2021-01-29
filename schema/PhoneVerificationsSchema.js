@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');  
 
 var PhoneVerificationsSchema = new mongoose.Schema({  
-    id: Number,
+    id: String,
     phone: String,
     verification_code: String,
     api_provider: String,

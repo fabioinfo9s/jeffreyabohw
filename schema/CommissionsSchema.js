@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');  
 
 var CommissionsSchema = new mongoose.Schema({  
-    id: Number,
+    id: String,
     type: String,
     amount: Number,
 

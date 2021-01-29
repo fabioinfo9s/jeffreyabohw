@@ -2,9 +2,9 @@
 var mongoose = require('mongoose');  
 
 var UsersSkillSetsSchema = new mongoose.Schema({  
-    id: Number,
-    user_id: Number,
-    skill_set_id: Number,
+    id: String,
+    user_id: String,
+    skill_set_id: String,
 
 },
 {

@@ -44,7 +44,7 @@ router.post('/proposal', function (req, res) {
 })
 
 router.get('/proposal', ensureAuthenticated, function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     if (!user_id) {
         res.status(500).send({ message: 'User not logged in!' })
     } else {
@@ -98,7 +98,7 @@ router.put('/proposal/:id', function (req, res) {
 })
 
 router.get('/offers', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     if (!user_id) {
         res.status(500).send({ message: 'User not logged in!' })
     } else {
@@ -148,7 +148,7 @@ router.delete('/offers/:id', function (req, res) {
 })
 
 router.get('/artisan-job-offer', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     if (!user_id) {
         res.status(500).send({ message: 'User not logged in!' })
     } else {
@@ -164,7 +164,7 @@ router.get('/artisan-job-offer', function (req, res) {
 })
 
 router.post('/artisan-job-offer/accept', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     var type;
     if (!user_id || type) {
         res.status(500).send({ message: 'Unauthorized!' })
@@ -174,7 +174,7 @@ router.post('/artisan-job-offer/accept', function (req, res) {
 })
 
 router.post('/artisan-job-offer/decline', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     var type;
     if (!user_id || type) {
         res.status(500).send({ message: 'Unauthorized!' })
@@ -200,7 +200,7 @@ router.get('/artisan/:id', function (req, res) {
 })
 
 router.get('/ratings', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     if (!user_id) {
         res.status(500).send({ message: 'User not logged in!' })
     } else {
@@ -224,7 +224,7 @@ router.get('/ratings', function (req, res) {
 })
 
 router.get('/reviews', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     if (!user_id) {
         res.status(500).send({ message: 'User not logged in!' })
     } else {
@@ -259,7 +259,7 @@ router.get('/jobs/:status', function (req, res) {
 })
 
 router.get('/schedule', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     if (!user_id) {
         res.status(500).send({ message: 'User not logged in!' })
     } else {
@@ -283,7 +283,7 @@ router.get('/schedule', function (req, res) {
 })
 
 router.get('/earnings', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     if (!user_id) {
         res.status(500).send({ message: 'User not logged in!' })
     } else {
@@ -299,7 +299,7 @@ router.get('/earnings', function (req, res) {
 })
 
 router.get('/job-insight', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     if (!user_id) {
         res.status(500).send({ message: 'User not logged in!' })
     } else {
@@ -319,7 +319,7 @@ router.get('/job-insight', function (req, res) {
 })
 
 router.post('/expertise', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     var data = req.body;
     if (!data) {
         res.status(500).send({ message: 'Missing params/body!' })
@@ -335,7 +335,7 @@ router.post('/expertise', function (req, res) {
 })
 
 router.put('/expertise', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     var data = req.body;
     if (!data) {
         res.status(500).send({ message: 'Missing params/body!' })
@@ -352,7 +352,7 @@ router.put('/expertise', function (req, res) {
 })
 
 router.get('/expertise', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     if (!user_id) {
         res.status(500).send({ message: 'User not logged in!' })
     } else {
@@ -368,7 +368,7 @@ router.get('/expertise', function (req, res) {
 })
 
 router.post('/portfolio', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     if (!user_id) {
         res.status(500).send({ message: 'User not logged in!' })
     } else {
@@ -386,7 +386,7 @@ router.put('/portfolio/:id', function (req, res) {
 })
 
 router.get('/portfolio', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     if (!user_id) {
         res.status(500).send({ message: 'Unauthorized!' })
     } else {
@@ -402,7 +402,7 @@ router.get('/portfolio', function (req, res) {
 })
 
 router.delete('/portfolio/:id', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     if (!user_id) {
         res.status(500).send({ message: 'Unauthorized!' })
     } else {
@@ -420,7 +420,7 @@ router.delete('/portfolio/:id', function (req, res) {
 })
 
 router.post('/profile-video', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     if (!user_id) {
         res.status(500).send({ message: 'Unauthorized!' })
     } else {
@@ -429,7 +429,7 @@ router.post('/profile-video', function (req, res) {
 })
 
 router.put('/profile-video', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     if (!user_id) {
         res.status(500).send({ message: 'Unauthorized!' })
     } else {
@@ -438,7 +438,7 @@ router.put('/profile-video', function (req, res) {
 })
 
 router.get('/profile-video', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     if (!user_id) {
         res.status(500).send({ message: 'Unauthorized!' })
     } else {
@@ -454,7 +454,7 @@ router.get('/profile-video', function (req, res) {
 })
 
 router.post('/rate', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     var data = req.body;
     if (!user_id) {
         res.status(500).send({ message: 'Unauthorized!' })
@@ -481,7 +481,7 @@ router.post('/rate', function (req, res) {
 })
 
 router.put('/rate', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     var data = req.body;
     if (!user_id) {
         res.status(500).send({ message: 'Unauthorized!' })
@@ -498,7 +498,7 @@ router.put('/rate', function (req, res) {
 })
 
 router.get('/rate', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     if (!user_id) {
         res.status(500).send({ message: 'Unauthorized!' })
     } else {

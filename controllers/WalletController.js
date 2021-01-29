@@ -24,7 +24,7 @@ router.post('/withdraw', function (req, res) {
 })
 
 router.get('/check', function (req, res) {
-    var user_id;
+    var user_id = req.user.id;
     UserWalletsSchema.findOne({ user_id: user_id }, function (reject, resolve) {
         if (reject) {
             res.status(500).send(reject)

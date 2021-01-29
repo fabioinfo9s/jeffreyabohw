@@ -2,8 +2,8 @@
 var mongoose = require('mongoose');  
 
 var JobAttachmentsSchema = new mongoose.Schema({  
-    id: Number,
-    job_id: Number,
+    id: String,
+    job_id: String,
     image: String,
 
 },

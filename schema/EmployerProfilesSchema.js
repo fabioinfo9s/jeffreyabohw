@@ -2,8 +2,8 @@
 var mongoose = require('mongoose');  
 
 var EmployerProfilesSchema = new mongoose.Schema({  
-    id: Number,
-    user_id: Number,
+    id: String,
+    user_id: String,
     description: String,
     employees: Number,
     company_name: String,

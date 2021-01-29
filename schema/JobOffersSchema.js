@@ -2,10 +2,10 @@
 var mongoose = require('mongoose');  
 
 var JobOffersSchema = new mongoose.Schema({  
-    id: Number,
-    job_id: Number,
-    created_offer_user_id: Number,
-    user_artisan_id: Number,
+    id: String,
+    job_id: String,
+    created_offer_user_id: String,
+    user_artisan_id: String,
     pitch: String,
     offer_amount: Number,
     due_date: Date,

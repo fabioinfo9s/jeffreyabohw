@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');  
 
 var ArtisanOnboardingSchema = new mongoose.Schema({  
-    id: Number,
+    id: String,
     first_name: String,
     last_name: String,
     email: string,

@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');  
 
 var CronSimilarJobsSchema = new mongoose.Schema({  
-    id: Number,
+    id: String,
     user_email: String,
     jobs_id: String,
     email_sent: String,

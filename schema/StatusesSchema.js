@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');  
 
 var StatusesSchema = new mongoose.Schema({  
-    id: Number,
+    id: String,
     name: String,
     reason: String,
     model: String,

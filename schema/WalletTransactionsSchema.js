@@ -2,12 +2,12 @@
 var mongoose = require('mongoose');  
 
 var WalletTransactionsSchema = new mongoose.Schema({  
-    id: Number,
-    user_id: Number,
+    id: String,
+    user_id: String,
     title: String,
     type: { type: String, enum: ['credit', 'debit'] },
     identifier: String,
-    transactionable_id: Number,
+    transactionable_id: String,
     transactionable_type: String,
 
 },

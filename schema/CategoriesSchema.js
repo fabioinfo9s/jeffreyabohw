@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');  
 
 var CategoriesSchema = new mongoose.Schema({  
-    id: Number,
+    id: String,
     name: String,
     slug: String,
     description: String,

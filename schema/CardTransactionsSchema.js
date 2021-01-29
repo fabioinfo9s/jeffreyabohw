@@ -2,8 +2,8 @@
 var mongoose = require('mongoose');  
 
 var CardTransactionsSchema = new mongoose.Schema({  
-    id: Number,
-    user_id: Number,
+    id: String,
+    user_id: String,
     sera: String,
     flwRef: String,
 

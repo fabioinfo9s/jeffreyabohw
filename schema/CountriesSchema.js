@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');  
 
 var CountriesSchema = new mongoose.Schema({  
-    id: Number,
+    id: String,
     name: String,
     code: String,
     short_name: String,

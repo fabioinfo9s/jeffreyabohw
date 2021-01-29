@@ -2,9 +2,9 @@
 var mongoose = require('mongoose');  
 
 var StatesSchema = new mongoose.Schema({  
-    id: Number,
+    id: String,
     name: String,
-    country_id: Number,
+    country_id: String,
     code: String,
 
 },

@@ -2,8 +2,8 @@
 var mongoose = require('mongoose');  
 
 var UserPortfoliosSchema = new mongoose.Schema({  
-    id: Number,
-    user_id: Number,
+    id: String,
+    user_id: String,
     portfolio: String,
 
 },

@@ -64,8 +64,8 @@ app.set('view engine', 'jade');
 // app.use('/api/v1/artisan', ArtisanController);
 // var ArtisanController = require('./artisan/ArtisanController');
 // app.use('/api/v1/professional', ArtisanController);
-var AuthController = require('../controllers/AuthController');
-app.use('/api/v1/auth', AuthController);
+//var AuthController = require('../controllers/AuthController');
+//app.use('/api/v1/auth', AuthController);
 // var BillingController = require('./billing/BillingController');
 // app.use('/api/v1/billing-address', BillingController);
 // var JobCategoryController = require('./category/JobCategoryController');
@@ -125,9 +125,9 @@ app.use('/api/v1/jobs', JobsController);
 // var WalletController = require('../controllers/WalletController');
 // app.use('/api/v1/wallet', WalletController);
 
-// // AUTH
-// var AuthController = require('../controllers/AuthController');
-// app.use('/api/v1/auth', AuthController);
+// AUTH
+var AuthController = require('../controllers/AuthController');
+app.use('/api/v1/auth', AuthController);
 
 // // ARTISAN
 // var ArtisanController = require('../controllers/ArtisanController');

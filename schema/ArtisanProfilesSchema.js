@@ -2,13 +2,13 @@
 var mongoose = require('mongoose');  
 
 var ArtisanProfilesSchema = new mongoose.Schema({  
-    id: Number,
-    user_id: Number,
-    category_id: Number,
-    skill_set_id: Number,
-    country_id: Number,
-    state_id: Number,
-    city_id: Number,
+    id: String,
+    user_id: String,
+    category_id: String,
+    skill_set_id: String,
+    country_id: String,
+    state_id: String,
+    city_id: String,
     lng: String,
     lat: String,
     national_identity: String,

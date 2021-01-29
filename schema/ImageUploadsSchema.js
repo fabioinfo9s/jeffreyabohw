@@ -2,8 +2,8 @@
 var mongoose = require('mongoose');  
 
 var ImageUploadsSchema = new mongoose.Schema({  
-    id: Number,
-    user_id: Number,
+    id: String,
+    user_id: String,
     imageable_id: String,
     imageable_type: String,
     image: String,

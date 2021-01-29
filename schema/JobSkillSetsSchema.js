@@ -2,9 +2,9 @@
 var mongoose = require('mongoose');  
 
 var JobSkillSetsSchema = new mongoose.Schema({  
-    id: Number,
-    job_id: Number,
-    skill_set_id: Number,
+    id: String,
+    job_id: String,
+    skill_set_id: String,
 
 },
 {

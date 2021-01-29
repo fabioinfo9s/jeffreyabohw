@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');  
 
 var TableQueuesSchema = new mongoose.Schema({  
-    id: Number,
+    id: String,
     queue: String,
     payload: String,
     attempts: Number,

@@ -2,8 +2,8 @@
 var mongoose = require('mongoose');  
 
 var WalletFundsSchema = new mongoose.Schema({  
-    id: Number,
-    user_id: Number,
+    id: String,
+    user_id: String,
     amount: Number,
     status: String,
     payment: Boolean,

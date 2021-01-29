@@ -2,11 +2,11 @@
 var mongoose = require('mongoose');  
 
 var JobAttributeRatingsSchema = new mongoose.Schema({  
-    id: Number,
-    job_id: Number,
-    attribute_id: Number,
+    id: String,
+    job_id: String,
+    attribute_id: String,
     artisan_rating: Number,
-    artisan_id: Number,
+    artisan_id: String,
 
 },
 {

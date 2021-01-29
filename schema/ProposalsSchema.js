@@ -2,14 +2,14 @@
 var mongoose = require('mongoose');  
 
 var ProposalsSchema = new mongoose.Schema({  
-    id: Number,
+    id: String,
     cover_letter: String,
     approved: { type: Boolean, default: true },
     bid_amount: Number,
-    job_id: Number,
-    job_offer_id: Number,
-    artisan_id: Number,
-    employer_id: Number,
+    job_id: String,
+    job_offer_id: String,
+    artisan_id: String,
+    employer_id: String,
     due_date: Date,
 
 },

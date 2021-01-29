@@ -2,8 +2,8 @@
 var mongoose = require('mongoose');  
 
 var UserLinksSchema = new mongoose.Schema({  
-    id: Number,
-    user_id: Number,
+    id: String,
+    user_id: String,
     link: String,
 
 },

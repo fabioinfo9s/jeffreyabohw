@@ -2,8 +2,8 @@
 var mongoose = require('mongoose');  
 
 var UserRatesSchema = new mongoose.Schema({  
-    id: Number,
-    user_id: Number,
+    id: String,
+    user_id: String,
     rate_amount: Number,
     rate: String,
 

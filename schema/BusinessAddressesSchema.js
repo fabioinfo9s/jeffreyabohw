@@ -2,14 +2,14 @@
 var mongoose = require('mongoose');  
 
 var BusinessAddressesSchema = new mongoose.Schema({  
-    id: Number,
+    id: String,
     address1: String,
     address2: String,
     zipcode: Number,
-    user_id: Number,
-    country_id: Number,
-    state_id: Number,
-    city_id: Number,
+    user_id: String,
+    country_id: String,
+    state_id: String,
+    city_id: String,
 
 },
 {

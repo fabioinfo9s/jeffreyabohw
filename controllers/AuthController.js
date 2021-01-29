@@ -91,11 +91,21 @@ router.post('/signup', function (req, res) {
                         if(err) throw err;
                         //save pass to hash
                         userData.password = hash;
-                        //save user_id
-                        userData.id = userData._id
+                        var id = userData._id;
+                        userData.id = id;
                         //save user
                         userData.save().then( resolve => {
-                            res.status(200).send({ message: 'Registration successful!'}, resolve)
+                            //auto login user
+                            passport.authenticate('local', function(err, user, info) {
+                                if (err) { return res.status(500).send(err); }
+                                if (!user) { return res.status(404).send({ message: 'Wrong emal/password combination!' }); }
+                                req.logIn(user, function(reject) {
+                                  if (reject) { 
+                                      return res.status(500).send(err); 
+                                    }
+                                  return res.status(200).send({ token: user.token, id: user.id})
+                                });
+                              })(req, res);
                         }, reject => {
                             res.status(500).send({ message: 'Error!' })
                         })
