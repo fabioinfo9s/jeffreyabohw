@@ -25,6 +25,7 @@ var UsersSchema = new mongoose.Schema({
     phone_verified_at: { type: Date, default: Date.now },
     password: String,
     token: String,
+    remember_token: String,
 
 },
 {

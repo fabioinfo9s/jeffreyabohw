@@ -9,7 +9,7 @@ app.use('/', function(req, res) {
     res.status(200).send('KeyedIn API Server is Running');
 });
 
-categorySeeder.run();
+//categorySeeder.run();
 
 // Starting API Server
 var server = http.listen(port, function() {
