@@ -5,6 +5,8 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 var bcrypt = require('bcrypt');
 const passport = require('passport');
+var cloudinary = require('../config/cloudinary');
+var fs = require('fs');
 
 
 // Import Schema
@@ -57,34 +59,161 @@ router.post('/signup', function (req, res) {
                 res.status(500).send({ message: 'Error!' })
             }
             if (resolve) {
-                res.status(500).send({ message: 'User already exists!' })
+                //auto login user
+                passport.authenticate('local', function(err, user, info) {
+                    if (err) { 
+                        return res.status(500).send(err); 
+                    }
+                    if (!user) { 
+                        return res.status(404).send({ message: 'Wrong emal/password combination!' }); 
+                    }
+                    req.logIn(user, function(reject) {
+                        if (reject) { 
+                            return res.status(500).send(err); 
+                        }
+                        //upload avatar
+                        if (data.avatar) {
+                            var base64String = data.avatar;
+                            cloudinary.decodeBase64(base64String, (url) => {
+                                if (url) {
+                                    cloudinary.uploadImage(url, (secure_url) => {
+                                        if (secure_url) {
+                                            const postData = {
+                                                avatar: secure_url,
+                                            }
+                                            UsersSchema.findOneAndUpdate({id: user.id}, {$set: postData}, {new: true})
+                                                .then( resolve => {
+                                                    return res.status(200).send({ token: user.token, id: user.id })
+                                                }, reject => {
+                                                    return res.status(500).send({ message: 'Error saving avatar! Try again' })
+                                            })
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                        // Category
+                        if (data.category_id) {
+                            var categoryData = new CategoriesSchema( data )
+                            var id = categoryData._id;
+                            categoryData.id = id;
+                            categoryData.user_id = user.id;
+                            categoryData.save().then( resolve => {
+                                return res.status(200).send({ token: user.token, id: user.id})
+                            }, reject => {
+                                return res.status(500).send({ message: 'Unknown error!' })
+                            })
+                        }
+                        // Employment
+                        if (data.employment) {
+                            var employmentData = new EmployerProfilesSchema( data )
+                            var id = employmentData._id;
+                            employmentData.id = id;
+                            employmentData.user_id = user.id;
+                            employmentData.save().then( resolve => {
+                                return res.status(200).send({ token: user.token, id: user.id})
+                            }, reject => {
+                                return res.status(500).send({ message: 'Unknown error!' })
+                            })
+                        }
+                        // Education
+                        if (data.education) {
+                            var educationData = new EducationalBackgroundSchema( data )
+                            var id = educationData._id;
+                            educationData.id = id;
+                            educationData.user_id = user.id;
+                            educationData.save().then( resolve => {
+                                return res.status(200).send({ token: user.token, id: user.id})
+                            }, reject => {
+                                return res.status(500).send({ message: 'Unknown error!' })
+                            })
+                        }
+                        // Expertise
+                        if (data.expertise) {
+                            var expertiseData = new UserExpertisesSchema( data )
+                            var id = expertiseData._id;
+                            expertiseData.id = id;
+                            expertiseData.user_id = user.id;
+                            expertiseData.save().then( resolve => {
+                                return res.status(200).send({ token: user.token, id: user.id})
+                            }, reject => {
+                                return res.status(500).send({ message: 'Unknown error!' })
+                            })
+                        }
+                        // Rates
+                        if (data.rates) {
+                            var ratesData = new UserRatesSchema( data )
+                            var id = ratesData._id;
+                            ratesData.id = id;
+                            ratesData.user_id = user.id;
+                            ratesData.save().then( resolve => {
+                                return res.status(200).send({ token: user.token, id: user.id})
+                            }, reject => {
+                                return res.status(500).send({ message: 'Unknown error!' })
+                            })
+                        }
+                        // Portfolio
+                        if (data.portfolio) {
+                            var base64String = data.portfolio;
+                            cloudinary.decodeBase64(base64String, (url) => {
+                                if (url) {
+                                    cloudinary.uploadImage(url, (secure_url) => {
+                                        if (secure_url) {
+                                            const postData = {
+                                                portfolio: secure_url
+                                            }
+                                            var portfolioData = new UserPortfoliosSchema ( postData )
+                                            var id = portfolioData._id;
+                                            portfolioData.id = id;
+                                            portfolioData.user_id = user.id;
+                                            portfolioData.save()
+                                            .then( resolve => {
+                                                return res.status(200).send({ token: user.token, id: user.id})
+                                            }, reject => {
+                                                return res.status(500).send({ message: 'Error!' })
+                                            })
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                        // Profile Video
+                        if (data.profile_video) {
+                            var video = __dirname + '/'
+                            cloudinary.uploadVideo(video, (url) => {
+                                console.log(url)
+                            })
+                        }
+                        // Skills
+                        if (data.skills) {
+                            var skillsData = new SkillSetsSchema( data )
+                            var id = skillsData._id;
+                            skillsData.id = id;
+                            skillsData.user_id = user.id;
+                            skillsData.skill_set_id = id;
+                            skillsData.save().then( resolve => {
+                                return res.status(200).send({ token: user.token, id: user.id})
+                            }, reject => {
+                                return res.status(500).send({ message: 'Unknown error!' })
+                            })
+                        }
+                        // Links
+                        if (data.links) {
+                            var linksData = new UserLinksSchema( data )
+                            var id = linksData._id;
+                            linksData.id = id;
+                            linksData.user_id = user.id;
+                            linksData.save().then( resolve => {
+                                return res.status(200).send({ token: user.token, id: user.id})
+                            }, reject => {
+                                return res.status(500).send({ message: 'Unknown error!' })
+                            })
+                        }
+                        
+                    });
+                })(req, res);
             }
             if (!resolve) {
-                // Category
-                var categoryData = new CategoriesSchema( data )
-                categoryData.save();
-                // Employment
-                var employmentData = new EmployerProfilesSchema( data )
-                employmentData.save();
-                // Education
-                var educationData = new EducationalBackgroundSchema( data )
-                educationData.save();
-                // Expertise
-                var expertiseData = new UserExpertisesSchema( data )
-                expertiseData.save();
-                // Rates
-                var ratesData = new UserRatesSchema( data )
-                ratesData.save();
-                // Portfolio
-
-                // Profile Video
-                
-                // Skills
-                var skillsData = new SkillSetsSchema( data )
-                skillsData.save();
-                // Links
-                var linksData = new UserLinksSchema( data )
-                linksData.save();
                 // User
                 var userData = new UsersSchema( data )
                 bcrypt.genSalt(10,(err, salt)=> 
@@ -112,7 +241,7 @@ router.post('/signup', function (req, res) {
                             res.status(500).send({ message: 'Error!' })
                         })
                     })
-                );
+                );         
             }
         })
     }
@@ -209,5 +338,20 @@ router.post('/password/reset-password', function (req, res) {
         )
     }
 })
+
+
+router.get('/upload', function(req, res) {
+    var base64String = req.body;
+    cloudinary.decodeBase64(base64String, (url) => {
+        if (url) {
+            cloudinary.uploadImage(url, (secure_url) => {
+                if (secure_url) {
+                    console.log(secure_url)
+                }
+            })
+        }
+    })
+});
+
 
 module.exports = router;
