@@ -7,5 +7,37 @@ router.use(bodyParser.json());
 
 
 
+router.get('/new-phone-number', function (req, res, next) {
+
+})
+
+router.get('/', function (req, res, next) {
+
+})
+
+router.get('/', function (req, res, next) {
+
+})
+
+router.get('/', function (req, res, next) {
+
+})
+
+router.get('/', function (req, res, next) {
+
+})
+
+router.get('/', function (req, res, next) {
+
+})
+
+router.get('/', function (req, res, next) {
+
+})
+
+router.get('/', function (req, res, next) {
+
+})
+
 
 module.exports = router;

@@ -90,8 +90,8 @@ app.set('view engine', 'jade');
 // ROUTES ENDS
 
 // //  OTP
-//var OTPController = require('../controllers/OTPController');
-//app.use('/api/v1/otp', OTPController);
+var OTPController = require('../controllers/OTPController');
+app.use('/api/v1/otp', OTPController);
 
 // SKILLS
 var SkillController = require('../controllers/SkillController');
@@ -109,33 +109,33 @@ app.use('/api/v1/jobs', JobsController);
 // var LocationController = require('../controllers/LocationController');
 // app.use('/api/v1/location', LocationController);
 
-// // CATEGORY
-// var CategoryController = require('../controllers/CategoryController');
-// app.use('/api/v1/category', CategoryController);
+// CATEGORY
+var CategoryController = require('../controllers/CategoryController');
+app.use('/api/v1/category', CategoryController);
 
-// // MEDIA
-// var MediaController = require('../controllers/MediaController');
-// app.use('/api/v1/media', MediaController);
+// MEDIA
+var MediaController = require('../controllers/MediaController');
+app.use('/api/v1/media', MediaController);
 
-// // GENERAL
-// var GeneralController = require('../controllers/GeneralController');
-// app.use('/api/v1/general', GeneralController);
+// GENERAL
+var GeneralController = require('../controllers/GeneralController');
+app.use('/api/v1/general', GeneralController);
 
-// // WALLET
-// var WalletController = require('../controllers/WalletController');
-// app.use('/api/v1/wallet', WalletController);
+// WALLET
+var WalletController = require('../controllers/WalletController');
+app.use('/api/v1/wallet', WalletController);
 
 // AUTH
 var AuthController = require('../controllers/AuthController');
 app.use('/api/v1/auth', AuthController);
 
-// // ARTISAN
-// var ArtisanController = require('../controllers/ArtisanController');
-// app.use('/api/v1/artisan', ArtisanController);
+// ARTISAN
+var ArtisanController = require('../controllers/ArtisanController');
+app.use('/api/v1/artisan', ArtisanController);
 
-// // EMPLOYER
-// var EmployerController = require('../controllers/EmployerController');
-// app.use('/api/v1/employer', EmployerController);
+// EMPLOYER
+var EmployerController = require('../controllers/EmployerController');
+app.use('/api/v1/employer', EmployerController);
 
 // // PROFESSIONAL
 // var ProfessionalController = require('../controllers/ProfessionalController');
