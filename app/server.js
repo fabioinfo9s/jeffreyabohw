@@ -6,7 +6,7 @@ var categorySeeder = require('../seeds/CategoryTableSeeder');
 
 // Default launch URL
 app.use('/', function(req, res) {
-    res.status(200).send('KeyedIn API Server is Running');
+    res.status(200).send({ message: 'KeyedIn API Server is Running' });
 });
 
 //categorySeeder.run();
