@@ -5,7 +5,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
 var Twilio = require('../config/twilio');
-var OTPSchema = requir('../schema/OTPSchema');
+var OTPSchema = require('../schema/OTPSchema');
 var UsersSchema = require('../schema/UsersSchema');
 
 
