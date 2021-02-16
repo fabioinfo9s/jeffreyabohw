@@ -5,7 +5,7 @@ var http = require('http').createServer(app);
 var categorySeeder = require('../seeds/CategoryTableSeeder');
 
 // Default launch URL
-app.use('/', function(req, res) {
+app.use('/api/v1', function(req, res) {
     res.status(200).send({ message: 'KeyedIn API Server is Running' });
 });
 
