@@ -1,4 +1,4 @@
-HEROKU URL = https://keyedin.herokuapp.com/
+HEROKU URL = https://keyedin.herokuapp.com/api/v1
 
 
 
