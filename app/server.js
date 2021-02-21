@@ -9,10 +9,6 @@ app.use('/api/v1', function(req, res) {
     res.status(200).send({ message: 'KeyedIn API Server is Running' });
 });
 
-app.get('/api/v1', function(req, res) {
-    res.status(200).send({ message: 'KeyedIn API Server is Running' });
-});
-
 
 //categorySeeder.run();
 
