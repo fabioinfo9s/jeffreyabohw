@@ -5,7 +5,8 @@ var db = require('./db');
 var cors = require('cors');
 var bodyParser = require('body-parser');
 const basicAuth = require('express-basic-auth')
-const session = require('express-session');
+//const session = require('express-session');
+var session = require('cookie-session');
 const passport = require('passport');
 require('../config/passport')(passport)
 
