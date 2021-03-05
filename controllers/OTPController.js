@@ -5,7 +5,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
 var Twilio = require('../config/twilio');
-var OTPSchema = require('../schema/OTPSchema');
+//var OTPSchema = require('../schema/OTPSchema');
 var UsersSchema = require('../schema/UsersSchema');
 
 
@@ -106,37 +106,37 @@ router.post('/reset-phone-number-resend', function (req, res, next) {
     }
 })
 
-router.post('/verify-otp', function (req, res, next) {
-    var phone = req.body.phone;
-    var otp = req.body.code;
-    if (!phone) {
-        return res.status(500).send({ messsage: 'Phone number missing!' })
-    }
-    if (!otp) {
-        return res.status(500).send({ message: 'OTP missing!' })
-    }
-    OTPSchema.findOne({ value: otp }, function (reject, resolve) {
-        if (reject) {
-            res.status(500).send(reject)
-        }
-        if (resolve) {
-            const postData = {
-                phone_verified_at: Date.now
-            }
-            UsersSchema.findOneAndUpdate({ phone: phone }, {$set: postData}, {new: true}, function (reject, resolve) {
-                if (reject) {
-                    res.status(500).send({ message: 'Error!' })
-                }
-                if (resolve) {
-                    res.status(200).send({ message: 'Phone verified successfully!' })
-                }
-            })
-        }
-        if (!resolve) {
-            res.status(404).send({ message: 'OTP not valid, Try again!' })
-        }
-    })
-})
+// router.post('/verify-otp', function (req, res, next) {
+//     var phone = req.body.phone;
+//     var otp = req.body.code;
+//     if (!phone) {
+//         return res.status(500).send({ messsage: 'Phone number missing!' })
+//     }
+//     if (!otp) {
+//         return res.status(500).send({ message: 'OTP missing!' })
+//     }
+//     OTPSchema.findOne({ value: otp }, function (reject, resolve) {
+//         if (reject) {
+//             res.status(500).send(reject)
+//         }
+//         if (resolve) {
+//             const postData = {
+//                 phone_verified_at: Date.now
+//             }
+//             UsersSchema.findOneAndUpdate({ phone: phone }, {$set: postData}, {new: true}, function (reject, resolve) {
+//                 if (reject) {
+//                     res.status(500).send({ message: 'Error!' })
+//                 }
+//                 if (resolve) {
+//                     res.status(200).send({ message: 'Phone verified successfully!' })
+//                 }
+//             })
+//         }
+//         if (!resolve) {
+//             res.status(404).send({ message: 'OTP not valid, Try again!' })
+//         }
+//     })
+// })
 
 
 
