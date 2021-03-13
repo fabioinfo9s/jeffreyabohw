@@ -1,45 +1,39 @@
 const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcrypt');
-const User = require('../schema/UsersSchema');
+const UsersSchema = require('../schema/UsersSchema');
 
 
 module.exports = function(passport) {
     passport.use(
-        new LocalStrategy({usernameField : 'email'},(email, password, done)=> { 
+        new LocalStrategy({ usernameField : 'email', passwordField: 'password' }, (email, password, callback) => {
+                var parsedEmail = email.toLocaleLowerCase(); 
+                var encryptedPassword = Buffer.from(password).toString('base64');
                 var postData = {
                     token: generateToken(30)
                 }
-                //match user
-                User.findOneAndUpdate({email : email}, {$set: postData}, {new: true})
-                .then((user)=>{
-                 if(!user) {
-                     return done(null,false,{message : 'Email is not registered'});
-                 }
-                 //match pass
-                 bcrypt.compare(password, user.password,(err,isMatch)=>{
-                     if(err) throw err;
-
-                     if(isMatch) {
-                         return done(null,user);
-                     } else {
-                         return done(null,false,{message : 'Password incorrect'});
-                     }
-                 })
+                UsersSchema.findOneAndUpdate({email: parsedEmail, password: encryptedPassword}, {$set: postData}, {new: true}, function(reject, resolve) {
+                    if (reject) {
+                        return callback({ status: false, message: 'Connection error!' }, null);
+                    }
+                    if (!resolve) {
+                        return callback({ status: false, message: 'Wrong email and password combination!' }, null);
+                    }
+                    if (resolve) {
+                        return callback(null, resolve);
+                    }
                 })
-                .catch((err)=> {console.log(err)})
         })
         
     )
 
-    passport.serializeUser(function(user, done) {
-        done(null, user);
-      });
+    passport.serializeUser(function(user, callback) {
+        callback(null, user);
+    });
       
-    passport.deserializeUser(function(id, done) {
-        User.findById(id, function(err, user) {
-          done(err, user);
+    passport.deserializeUser(function(user, callback) {
+        UsersSchema.findById(user.id, function(error, user) {
+            callback(error, user);
         });
-      }); 
+    }); 
 }; 
 
 

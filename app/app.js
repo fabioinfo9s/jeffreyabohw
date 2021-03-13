@@ -48,9 +48,14 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 
 
-//  OTP
+var AuthenticationController = require('../controllers/AuthenticationController');
+app.use('/api/v1/auth', AuthenticationController);
 var OTPController = require('../controllers/OTPController');
 app.use('/api/v1/otp', OTPController);
+var UsersController = require('../controllers/UsersController');
+app.use('/api/v1/users', UsersController);
+var ProfilesController = require('../controllers/ProfilesController');
+app.use('/api/v1/profiles', ProfilesController);
 
 
 module.exports = app;
