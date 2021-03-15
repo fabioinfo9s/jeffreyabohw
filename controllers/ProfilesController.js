@@ -11,6 +11,17 @@ var EmploymentSchema = require('../schema/EmploymentSchema');
 
 // Expertise
 
+router.get('/expertise', function (req, res, next) {
+        ExpertiseSchema.find({}, function(reject, resolve) {
+            if (reject) {
+                return res.status(500).send({ status: false, message: 'Connection error!' })
+            }
+            if (resolve) {
+                return res.status(200).send({ status: true, message: 'Successful', data: resolve })
+            }
+        })
+})
+
 router.get('/expertise/:user_id', function (req, res, next) {
     var user_id = req.params.user_id;
     if (!user_id) {
@@ -79,6 +90,17 @@ router.put('/expertise/:user_id', function (req, res, next) {
 
 // Education
 
+router.get('/education', function (req, res, next) {
+    EducationSchema.find({}, function(reject, resolve) {
+        if (reject) {
+            return res.status(500).send({ status: false, message: 'Connection error!' })
+        }
+        if (resolve) {
+            return res.status(200).send({ status: true, message: 'Successful', data: resolve })
+        }
+    })
+})
+
 router.get('/education/:user_id', function (req, res, next) {
     var user_id = req.params.user_id;
     if (!user_id) {
@@ -146,6 +168,17 @@ router.put('/education/:user_id', function (req, res, next) {
 })
 
 // Employment
+
+router.get('/employment', function (req, res, next) {
+    EmploymentSchema.find({}, function(reject, resolve) {
+        if (reject) {
+            return res.status(500).send({ status: false, message: 'Connection error!' })
+        }
+        if (resolve) {
+            return res.status(200).send({ status: true, message: 'Successful', data: resolve })
+        }
+    })
+})
 
 router.get('/employment/:user_id', function (req, res, next) {
     var user_id = req.params.user_id;

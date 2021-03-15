@@ -6,6 +6,18 @@ router.use(bodyParser.json());
 var Twilio = require('../config/twilio');
 var UsersSchema = require('../schema/UsersSchema');
 
+
+router.get('/', function (req, res, next) {
+    UsersSchema.find({}, function(reject, resolve) {
+        if (reject) {
+            return res.status(500).send({ status: false, message: 'Connection error!' })
+        }
+        if (resolve) {
+            return res.status(200).send({ status: true, message: 'Successful', data: resolve })
+        }
+    })
+})
+
 router.get('/:phone', function (req, res, next) {
     var phone = req.params.phone;
     if (!phone) {
