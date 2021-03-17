@@ -5,44 +5,36 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 var UsersSchema = require('../schema/UsersSchema');
 const passport = require('passport');
+var Twilio = require('../config/twilio');
 
 router.post('/register', function (req, res, next) {
     var postData = req.body;
-    if (Object.keys(postData).length < 6 || !postData.email || !postData.password || !postData.phone || !postData.role) {
+    var phone = postData.phone;
+    var country_code = postData.country_code;
+    if (Object.keys(postData).length < 3 || !postData.phone || !postData.role || !postData.country_code) {
         return res.status(500).send({ status: false, message: 'Missing/invalid payload!' })
     } else {
-        var email = postData.email.toLocaleLowerCase();
-        UsersSchema.findOne({ email: email }, function(reject, resolve) {
+        UsersSchema.findOne({ phone: phone }, function(reject, resolve) {
             if (reject) {
                 return res.status(500).send({ status: false, message: 'Connection error!' })
             }
             if (!resolve) {
-                UsersSchema.findOne({ phone: postData.phone }, function(reject, resolve) {
-                    if (reject) {
-                        return res.status(500).send({ status: false, message: 'Connection error!' })
-                    }
-                    if (!resolve) {
-                        var data = new UsersSchema( postData )
-                        data.id = data._id;
-                        data.email = email;
-                        data.password = Buffer.from(postData.password).toString('base64');
-                        data.save()
-                        .then( resolve => {
-                            req.logIn(resolve, function(reject) {
-                                if (reject) { 
-                                      req.logout();
-                                      return res.status(500).send(reject);  
-                                }
-                                return res.status(200).send({ status: true, message: 'Registration successful!', data: resolve });
-                            })
-                        })
-                        .catch( reject => {
-                            return res.status(500).send({ status: false, message: 'Connection error!' })
-                        })
-                    }
-                    if (resolve) {
-                        return res.status(500).send({ status: false, message: 'Phone number already exists!' })
-                    }
+               var data = new UsersSchema( postData )
+               data.id = data._id;
+               data.save()
+               .then( resolve => {
+                    var user = resolve;
+                    Twilio.sendOTP(country_code, phone, (reject, resolve) => {
+                        if (reject) {
+                            return res.status(500).send(reject)
+                        }
+                        if (resolve) {
+                             return res.status(200).send({ status: true, message: 'Registration created!', user: user, otp: resolve })
+                        }
+                    })
+                })
+                .catch( reject => {
+                    return res.status(500).send({ status: false, message: 'Connection error!' })
                 })
             }
             if (resolve) {
@@ -51,6 +43,79 @@ router.post('/register', function (req, res, next) {
         })
     }
 })
+
+router.put('/register', function (req, res, next) {
+    var postData = req.body;
+    if (Object.keys(postData).length < 4 || !postData.email || !postData.password || !postData.phone || !postData.role) {
+        return res.status(500).send({ status: false, message: 'Missing/invalid payload!' })
+    } else {
+        postData.email = postData.email.toLocaleLowerCase();
+        postData.password = Buffer.from(postData.password).toString('base64');
+        UsersSchema.findOneAndUpdate({ phone: postData.phone }, { $set: postData }, { new: true }, function(reject, resolve) {
+            if (reject) {
+                return res.status(500).send({ status: false, message: 'Connection error!' })
+            }
+            if (!resolve) {
+                return res.status(500).send({ status: false, message: 'User does not exist!' })
+            }
+            if (resolve) {
+               req.logIn(resolve, function(reject) {
+                 if (reject) { 
+                    req.logout();
+                    return res.status(500).send(reject);  
+                 }
+                 return res.status(200).send({ status: true, message: 'Registration completed!', data: resolve });
+               })
+            }
+        })
+    }
+})
+
+// router.post('/register', function (req, res, next) {
+//     var postData = req.body;
+//     if (Object.keys(postData).length < 6 || !postData.email || !postData.password || !postData.phone || !postData.role) {
+//         return res.status(500).send({ status: false, message: 'Missing/invalid payload!' })
+//     } else {
+//         var email = postData.email.toLocaleLowerCase();
+//         UsersSchema.findOne({ email: email }, function(reject, resolve) {
+//             if (reject) {
+//                 return res.status(500).send({ status: false, message: 'Connection error!' })
+//             }
+//             if (!resolve) {
+//                 UsersSchema.findOne({ phone: postData.phone }, function(reject, resolve) {
+//                     if (reject) {
+//                         return res.status(500).send({ status: false, message: 'Connection error!' })
+//                     }
+//                     if (!resolve) {
+//                         var data = new UsersSchema( postData )
+//                         data.id = data._id;
+//                         data.email = email;
+//                         data.password = Buffer.from(postData.password).toString('base64');
+//                         data.save()
+//                         .then( resolve => {
+//                             req.logIn(resolve, function(reject) {
+//                                 if (reject) { 
+//                                       req.logout();
+//                                       return res.status(500).send(reject);  
+//                                 }
+//                                 return res.status(200).send({ status: true, message: 'Registration successful!', data: resolve });
+//                             })
+//                         })
+//                         .catch( reject => {
+//                             return res.status(500).send({ status: false, message: 'Connection error!' })
+//                         })
+//                     }
+//                     if (resolve) {
+//                         return res.status(500).send({ status: false, message: 'Phone number already exists!' })
+//                     }
+//                 })
+//             }
+//             if (resolve) {
+//                 return res.status(500).send({ status: false, message: 'User already exists!' })
+//             }
+//         })
+//     }
+// })
 
 router.post('/login', function (req, res, next) {
     if (!req.body.email || !req.body.password || !req.body.role) {

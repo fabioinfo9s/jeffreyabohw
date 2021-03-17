@@ -7,6 +7,7 @@ var UsersSchema = new mongoose.Schema({
     last_name: String,
     email: String,
     password: String,
+    country_code: String,
     phone: String,
     availability: { type: String, default: 'offline' },
     status: { type: Boolean, default: true },

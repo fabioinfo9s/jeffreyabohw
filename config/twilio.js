@@ -12,22 +12,31 @@ module.exports = {
         var receiver = slicePhone(smsPostData.to);
         var message = smsPostData.text;
         var country_code = smsPostData.country_code;
-            client.messages.create({
-                body: message,
-                to: country_code + receiver, 
-                messagingServiceSid: 'MG2f0338f1639fca8a774088163de1ac10',
-                })
-                .then((message) => {
-                    return callback(null, resolve = message.sid)
-                })
-                .catch((error) => {
-                    console.log(error)
-                    return callback(reject = { 
-                        status: false, 
+            // client.messages.create({
+            //     body: message,
+            //     to: country_code + receiver, 
+            //     messagingServiceSid: 'MG2f0338f1639fca8a774088163de1ac10',
+            //     })
+            //     .then((message) => {
+            //         return callback(null, { 
+            //             status: true, 
+            //             otp_code: message,
+            //             message: "OTP code sent succeessfully!" 
+            //         } /* resolve = message.sid */)
+            //     })
+            //     .catch((error) => {
+            //         console.log(error)
+            //         return callback(reject = { 
+            //             status: false, 
+            //             otp_code: message,
+            //             message: "Connection error!" 
+            //         }, null)
+            //     })
+            return callback(null, { 
+                        status: true, 
                         otp_code: message,
-                        message: "Connection error!" 
-                    }, null)
-                })
+                        message: "OTP code sent succeessfully!" 
+                    } /* resolve = message.sid */)
     },
     
     sendOTP: function sendOTP(country_code, phone, callback) {
