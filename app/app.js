@@ -56,7 +56,8 @@ var UsersController = require('../controllers/UsersController');
 app.use('/api/v1/users', UsersController);
 var ProfilesController = require('../controllers/ProfilesController');
 app.use('/api/v1/profiles', ProfilesController);
-
+var ProjectsController = require('../controllers/ProjectsController');
+app.use('/api/v1/projects', ProjectsController);
 
 module.exports = app;
 
