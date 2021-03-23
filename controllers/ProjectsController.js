@@ -7,15 +7,19 @@ var ProjectsSchema = require('../schema/ProjectsSchema');
 
 router.post('/add', function (req, res) {
     var postData = req.body;
-    var projectsData = new ProjectsSchema( postData );
-    projectsData.id = projectsData._id;
-    projectsData.save()
-    .then( resolve => {
-        return res.status(200).send({ status: true, message: 'Project created successfully!', data: resolve })
-    })
-    .catch( reject => {
-        return res.status(500).send({ status: false, message: 'Connection error!' })
-    })
+    if (Object.keys(postData).length < 2 || !postData.user_id || !postData.role) {
+        return res.status(500).send({ status: false, message: 'Missing/invalid payload!' })
+    } else {
+        var projectsData = new ProjectsSchema( postData );
+        projectsData.id = projectsData._id;
+        projectsData.save()
+        .then( resolve => {
+            return res.status(200).send({ status: true, message: 'Project created successfully!', data: resolve })
+        })
+        .catch( reject => {
+            return res.status(500).send({ status: false, message: 'Connection error!' })
+        })
+    }
 })
 
 router.get('/:project_id', function (req, res) {
