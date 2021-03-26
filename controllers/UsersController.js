@@ -5,6 +5,9 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 var Twilio = require('../config/twilio');
 var UsersSchema = require('../schema/UsersSchema');
+var ExpertiseSchema = require('../schema/ExpertiseSchema');
+var EducationSchema = require('../schema/EducationSchema');
+var EmploymentSchema = require('../schema/EmploymentSchema');
 
 
 router.get('/', function (req, res, next) {
@@ -51,6 +54,67 @@ router.post('/', function (req, res, next) {
         })
         .catch( reject => {
             return res.status(500).send({ status: false, message: 'Connection error!' })
+        })
+    }
+})
+
+router.get('/find/:role/:longitude/:latitude', function (req, res, next) {
+    var role = req.params.role;
+    var longitude = req.params.longitude;
+    var latitude = req.params.latitude;
+    if (!radius || !longitude || !latitude) {
+        return res.status(500).send({ status: false, message: 'Missing/invalid params!' })
+    } else {
+        const location = { type: 'Point', coordinates: [longitude, latitude] };
+        UsersSchema.findOne({
+            location: {
+              $geoIntersects: { $geometry: location }
+            },
+            role: role
+          }, function(reject, resolve) {
+            if (reject) {
+                return res.status(500).send({ status: false, message: 'Connection error!' })
+            }
+            if (!resolve) {
+                return res.status(404).send({ status: false, message: 'Unable to locate people within that location!' })
+            }
+            if (resolve) {
+                var user = resolve;
+                ExpertiseSchema.findOne({ user_id: user.user_id }, function(reject, resolve) {
+                    if (reject) {
+                        return res.status(500).send({ status: false, message: 'Connection error!' })
+                    }
+                    if (!resolve) {
+                        return res.status(200).send({ status: true, message: 'Successful', user })
+                    }
+                    if (resolve) {
+                        var expertise = resolve;
+                        EducationSchema.findOne({ user_id: user.user_id }, function(reject, resolve) {
+                            if (reject) {
+                                return res.status(500).send({ status: false, message: 'Connection error!' })
+                            }
+                            if (!resolve) {
+                                return res.status(200).send({ status: true, message: 'Successful', user, expertise })
+                            }
+                            if (resolve) {
+                                var education = resolve;
+                                EmploymentSchema.findOne({ user_id: user.user_id }, function(reject, resolve) {
+                                    if (reject) {
+                                        return res.status(500).send({ status: false, message: 'Connection error!' })
+                                    }
+                                    if (!resolve) {
+                                        return res.status(200).send({ status: true, message: 'Successful', user, expertise, education })
+                                    }
+                                    if (resolve) {
+                                        var employment = resolve;
+                                        return res.status(200).send({ status: true, message: 'Successful', user, expertise, education, employment })
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+            }
         })
     }
 })

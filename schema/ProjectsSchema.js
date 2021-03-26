@@ -14,6 +14,7 @@ var ProjectsSchema = new mongoose.Schema({
     budget: String,
     start_date: String,
     end_date: String,
+    status: { type: String, default: 'open' }
 },
 {
     timestamps: true

@@ -46,6 +46,40 @@ router.get('/user/:user_id', function (req, res) {
     })
 })
 
+router.get('/all/:type/:user_id', function (req, res) {
+    var type = req.params.type;
+    var user_id = req.params.user_id;
+    if (!type || !user_id) {
+        return res.status(500).send({ status: false, message: 'Missing/invalid params!' })
+    } else {
+        ProjectsSchema.find({ user_id: user_id, type: type }, function(reject, resolve) {
+            if (reject) {
+                return res.status(500).send({ status: false, message: 'Connection error!' })
+            }
+            if (resolve) {
+                return res.status(200).send({ status: true, message: 'Successful', data: resolve })
+            }
+        })
+    }
+})
+
+router.get('/status/:status/:user_id', function (req, res) {
+    var status = req.params.status;
+    var user_id = req.params.user_id;
+    if (!status || !user_id) {
+        return res.status(500).send({ status: false, message: 'Missing/invalid params!' })
+    } else {
+        ProjectsSchema.find({ user_id: user_id, status: status }, function(reject, resolve) {
+            if (reject) {
+                return res.status(500).send({ status: false, message: 'Connection error!' })
+            }
+            if (resolve) {
+                return res.status(200).send({ status: true, message: 'Successful', data: resolve })
+            }
+        })
+    }
+})
+
 router.delete('/:project_id', function (req, res) {
     var project_id = req.params.project_id;
     ProjectsSchema.findOneAndDelete({ id: project_id })

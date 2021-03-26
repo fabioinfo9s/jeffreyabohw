@@ -1,17 +1,25 @@
 // Schema for MongoDB
 var mongoose = require('mongoose');
 
+const pointSchema = new mongoose.Schema({
+    type: {
+      type: String,
+      enum: ['Point'],
+    },
+    coordinates: {
+      type: [Number],
+    }
+});
+
 var UsersSchema = new mongoose.Schema({  
     id: String,
     first_name: String,
     last_name: String,
     username: String,
-    address: String,
-    city: String,
-    state: String,
     country: String,
-    longitude: String,
-    latitude: String,
+    location: {
+        type: pointSchema,
+    },
     email: String,
     password: String,
     country_code: String,
