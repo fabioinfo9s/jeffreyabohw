@@ -6,6 +6,7 @@ router.use(bodyParser.json());
 var UsersSchema = require('../schema/UsersSchema');
 const passport = require('passport');
 var Twilio = require('../config/twilio');
+var walletsService = require('../services/WalletsService');
 
 router.post('/register', function (req, res, next) {
     var postData = req.body;
@@ -19,23 +20,32 @@ router.post('/register', function (req, res, next) {
                 return res.status(500).send({ status: false, message: 'Connection error!' })
             }
             if (!resolve) {
-               var data = new UsersSchema( postData )
-               data.id = data._id;
-               data.save()
-               .then( resolve => {
-                    var user = resolve;
-                    Twilio.sendOTP(country_code, phone, (reject, resolve) => {
-                        if (reject) {
-                            return res.status(500).send(reject)
-                        }
-                        if (resolve) {
-                             return res.status(200).send({ status: true, message: 'Registration created!', user: user, otp: resolve })
-                        }
+                var data = new UsersSchema( postData )
+                data.id = data._id;
+                data.token = generateToken(30);
+                data.save()
+                .then( resolve => {
+                        var user = resolve;
+                        walletsService.createUserWallet(user.id, (reject, resolve) => {
+                            if (reject) {
+                                return res.status(500).send(reject)
+                            }
+                            if (resolve) {
+                                var wallet = resolve;
+                                Twilio.sendOTP(country_code, phone, (reject, resolve) => {
+                                    if (reject) {
+                                        return res.status(500).send(reject)
+                                    }
+                                    if (resolve) {
+                                        return res.status(200).send({ status: true, message: 'Registration created!', user: user, otp: resolve, wallet: wallet })
+                                    }
+                                })
+                            }
+                        })
                     })
-                })
-                .catch( reject => {
-                    return res.status(500).send({ status: false, message: 'Connection error!' })
-                })
+                    .catch( reject => {
+                        return res.status(500).send({ status: false, message: 'Connection error!' })
+                    })
             }
             if (resolve) {
                 return res.status(500).send({ status: false, message: 'User already exists!' })
@@ -51,21 +61,31 @@ router.put('/register', function (req, res, next) {
     } else {
         postData.email = postData.email.toLocaleLowerCase();
         postData.password = Buffer.from(postData.password).toString('base64');
-        UsersSchema.findOneAndUpdate({ phone: postData.phone }, { $set: postData }, { new: true }, function(reject, resolve) {
+        UsersSchema.findOne({ email: postData.email }, function(reject, resolve) {
             if (reject) {
                 return res.status(500).send({ status: false, message: 'Connection error!' })
             }
             if (!resolve) {
-                return res.status(500).send({ status: false, message: 'User does not exist!' })
+                UsersSchema.findOneAndUpdate({ phone: postData.phone }, { $set: postData }, { new: true }, function(reject, resolve) {
+                    if (reject) {
+                        return res.status(500).send({ status: false, message: 'Connection error!' })
+                    }
+                    if (!resolve) {
+                        return res.status(500).send({ status: false, message: 'User does not exist!' })
+                    }
+                    if (resolve) {
+                       req.logIn(resolve, function(reject) {
+                         if (reject) { 
+                            req.logout();
+                            return res.status(500).send(reject);  
+                         }
+                         return res.status(200).send({ status: true, message: 'Registration completed!', data: resolve });
+                       })
+                    }
+                })
             }
             if (resolve) {
-               req.logIn(resolve, function(reject) {
-                 if (reject) { 
-                    req.logout();
-                    return res.status(500).send(reject);  
-                 }
-                 return res.status(200).send({ status: true, message: 'Registration completed!', data: resolve });
-               })
+                return res.status(500).send({ status: false, message: 'Email already exist!' })
             }
         })
     }
@@ -216,3 +236,13 @@ router.get('/logout/:user_id', function (req, res, next) {
 })
 
 module.exports = router;
+
+function generateToken(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
