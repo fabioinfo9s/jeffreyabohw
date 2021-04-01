@@ -14,6 +14,8 @@ var ProjectsSchema = new mongoose.Schema({
     skill_set: String,
     tags: { type: Array },
     location: { type: Array },
+    bids: { type: Array },
+    priority: { type: String, default: 'medium' },
     payment_mode: String,
     budget: String,
     start_date: String,
