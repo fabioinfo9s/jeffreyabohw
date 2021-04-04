@@ -21,6 +21,7 @@ router.post('/register', function (req, res, next) {
             if (!resolve) {
                var data = new UsersSchema( postData )
                data.id = data._id;
+               data.token = generateToken(30);
                data.save()
                .then( resolve => {
                     var user = resolve;
@@ -216,3 +217,13 @@ router.get('/logout/:user_id', function (req, res, next) {
 })
 
 module.exports = router;
+
+function generateToken(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
