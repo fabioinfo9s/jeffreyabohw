@@ -19,24 +19,24 @@ router.post('/register', function (req, res, next) {
                 return res.status(500).send({ status: false, message: 'Connection error!' })
             }
             if (!resolve) {
-               var data = new UsersSchema( postData )
-               data.id = data._id;
-               data.token = generateToken(30);
-               data.save()
-               .then( resolve => {
-                    var user = resolve;
-                    Twilio.sendOTP(country_code, phone, (reject, resolve) => {
-                        if (reject) {
-                            return res.status(500).send(reject)
-                        }
-                        if (resolve) {
-                             return res.status(200).send({ status: true, message: 'Registration created!', user: user, otp: resolve })
-                        }
+                var data = new UsersSchema( postData )
+                data.id = data._id;
+                data.token = generateToken(30);
+                data.save()
+                .then( resolve => {
+                        var user = resolve;
+                        Twilio.sendOTP(country_code, phone, (reject, resolve) => {
+                            if (reject) {
+                                return res.status(500).send(reject)
+                            }
+                            if (resolve) {
+                                return res.status(200).send({ status: true, message: 'Registration created!', user: user, otp: resolve })
+                            }
+                        })
                     })
-                })
-                .catch( reject => {
-                    return res.status(500).send({ status: false, message: 'Connection error!' })
-                })
+                    .catch( reject => {
+                        return res.status(500).send({ status: false, message: 'Connection error!' })
+                    })
             }
             if (resolve) {
                 return res.status(500).send({ status: false, message: 'User already exists!' })
@@ -52,21 +52,31 @@ router.put('/register', function (req, res, next) {
     } else {
         postData.email = postData.email.toLocaleLowerCase();
         postData.password = Buffer.from(postData.password).toString('base64');
-        UsersSchema.findOneAndUpdate({ phone: postData.phone }, { $set: postData }, { new: true }, function(reject, resolve) {
+        UsersSchema.findOne({ email: postData.email }, function(reject, resolve) {
             if (reject) {
                 return res.status(500).send({ status: false, message: 'Connection error!' })
             }
             if (!resolve) {
-                return res.status(500).send({ status: false, message: 'User does not exist!' })
+                UsersSchema.findOneAndUpdate({ phone: postData.phone }, { $set: postData }, { new: true }, function(reject, resolve) {
+                    if (reject) {
+                        return res.status(500).send({ status: false, message: 'Connection error!' })
+                    }
+                    if (!resolve) {
+                        return res.status(500).send({ status: false, message: 'User does not exist!' })
+                    }
+                    if (resolve) {
+                       req.logIn(resolve, function(reject) {
+                         if (reject) { 
+                            req.logout();
+                            return res.status(500).send(reject);  
+                         }
+                         return res.status(200).send({ status: true, message: 'Registration completed!', data: resolve });
+                       })
+                    }
+                })
             }
             if (resolve) {
-               req.logIn(resolve, function(reject) {
-                 if (reject) { 
-                    req.logout();
-                    return res.status(500).send(reject);  
-                 }
-                 return res.status(200).send({ status: true, message: 'Registration completed!', data: resolve });
-               })
+                return res.status(500).send({ status: false, message: 'Email already exist!' })
             }
         })
     }
