@@ -6,6 +6,7 @@ router.use(bodyParser.json());
 var UsersSchema = require('../schema/UsersSchema');
 const passport = require('passport');
 var Twilio = require('../config/twilio');
+var walletsService = require('../services/WalletsService');
 
 router.post('/register', function (req, res, next) {
     var postData = req.body;
@@ -25,12 +26,20 @@ router.post('/register', function (req, res, next) {
                 data.save()
                 .then( resolve => {
                         var user = resolve;
-                        Twilio.sendOTP(country_code, phone, (reject, resolve) => {
+                        walletsService.createUserWallet(user.id, (reject, resolve) => {
                             if (reject) {
                                 return res.status(500).send(reject)
                             }
                             if (resolve) {
-                                return res.status(200).send({ status: true, message: 'Registration created!', user: user, otp: resolve })
+                                var wallet = resolve;
+                                Twilio.sendOTP(country_code, phone, (reject, resolve) => {
+                                    if (reject) {
+                                        return res.status(500).send(reject)
+                                    }
+                                    if (resolve) {
+                                        return res.status(200).send({ status: true, message: 'Registration created!', user: user, otp: resolve, wallet: wallet })
+                                    }
+                                })
                             }
                         })
                     })
