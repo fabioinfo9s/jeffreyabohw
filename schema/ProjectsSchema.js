@@ -20,11 +20,7 @@ var ProjectsSchema = new mongoose.Schema({
     budget: String,
     start_date: String,
     end_date: String,
-<<<<<<< HEAD
-    status: { type: String, default: 'open' }
-=======
     status: { type: String, default: 'open' },
->>>>>>> origin/main
 },
 {
     timestamps: true
