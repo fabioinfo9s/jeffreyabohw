@@ -1,6 +1,16 @@
 // Schema for MongoDB
 var mongoose = require('mongoose');
 
+const pointSchema = new mongoose.Schema({
+    type: {
+      type: String,
+      enum: ['Point'],
+    },
+    coordinates: {
+      type: [Number],
+    }
+});
+
 var ProjectsSchema = new mongoose.Schema({  
     id: String,
     user_id: String,
@@ -13,7 +23,6 @@ var ProjectsSchema = new mongoose.Schema({
     profession: String,
     skill_set: String,
     tags: { type: Array },
-    location: { type: Array },
     bids: { type: Array },
     priority: { type: String, default: 'medium' },
     payment_mode: String,
@@ -21,6 +30,10 @@ var ProjectsSchema = new mongoose.Schema({
     start_date: String,
     end_date: String,
     status: { type: String, default: 'open' },
+    country: String,
+    location: {
+        type: pointSchema,
+    },
 },
 {
     timestamps: true

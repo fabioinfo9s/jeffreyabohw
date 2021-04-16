@@ -76,7 +76,7 @@ router.get('/find/:role/:longitude/:latitude', function (req, res, next) {
                 return res.status(500).send({ status: false, message: 'Connection error!' })
             }
             if (!resolve) {
-                return res.status(404).send({ status: false, message: 'Unable to locate people within that location!' })
+                return res.status(404).send({ status: false, message: 'Unable to locate people within your location!' })
             }
             if (resolve) {
                 var user = resolve;
