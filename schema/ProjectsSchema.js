@@ -23,7 +23,6 @@ var ProjectsSchema = new mongoose.Schema({
     profession: String,
     skill_set: String,
     tags: { type: Array },
-    bids: { type: Array },
     priority: { type: String, default: 'medium' },
     payment_mode: String,
     budget: String,

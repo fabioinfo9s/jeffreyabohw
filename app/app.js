@@ -58,6 +58,8 @@ var ProfilesController = require('../controllers/ProfilesController');
 app.use('/api/v1/profiles', ProfilesController);
 var ProjectsController = require('../controllers/ProjectsController');
 app.use('/api/v1/projects', ProjectsController);
+var ProposalsController = require('../controllers/ProposalsController');
+app.use('/api/v1/proposals', ProposalsController);
 var WalletsController = require('../controllers/WalletsController');
 app.use('/api/v1/wallets', WalletsController);
 
