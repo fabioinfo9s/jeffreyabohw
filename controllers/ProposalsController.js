@@ -22,6 +22,25 @@ router.post('/add', function (req, res) {
     }
 })
 
+router.get('/:proposal_id', function (req, res) {
+    var proposal_id = req.params.proposal_id;
+    if (!proposal_id) {
+        return res.status(500).send({ status: false, message: 'Missing/invalid payload!' })
+    } else {
+        ProposalsSchema.findOne({ id: proposal_id }, function(reject, resolve) {
+            if (reject) {
+                return res.status(500).send({ status: false, message: 'Connection error!' })
+            }
+            if (!resolve) {
+                return res.status(404).send({ status: false, message: 'Proposal does not exists!' })
+            }
+            if (resolve) {
+                return res.status(200).send({ status: true, message: 'Successful', data: resolve })
+            }
+        })
+    }
+})
+
 router.get('/all/:role/:project_id', function (req, res) {
     var role = req.params.role;
     var project_id = req.params.project_id;
@@ -61,6 +80,21 @@ router.get('/protisan/:user_id', function (req, res) {
             return res.status(200).send({ status: true, message: 'Successful', data: resolve })
         }
     })
+})
+
+router.delete('/:proposal_id', function (req, res) {
+    var proposal_id = req.params.proposal_id;
+    ProposalsSchema.findOneAndDelete({ id: proposal_id })
+    .then( resolve => {
+		if (!resolve) {
+			return res.status(404).send({ status: false, message: 'Unable to delete!' })
+		} else {
+			return res.status(200).send({ status: true, message: 'Item deleted successfully!' })
+		}
+	})
+    .catch( reject => {
+		return res.status(500).send({ status: false, message: 'Connection error!' })
+	})
 })
 
 module.exports = router;
