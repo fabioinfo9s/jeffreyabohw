@@ -6,6 +6,7 @@ var JobOffersSchema = new mongoose.Schema({
     project_id: String,
     protisan_id: String,
     artisan_id: String,
+    role: String,
     pitch: String,
     offer_amount: String,
     due_date: String,
@@ -14,6 +15,7 @@ var JobOffersSchema = new mongoose.Schema({
     payment_mode: String,
     artisan_status: String,
     protisan_status: String,
+    status: { type: String, default: 'open' },
 },
 {
     timestamps: true
