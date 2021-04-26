@@ -58,6 +58,59 @@ router.post('/', function (req, res, next) {
     }
 })
 
+router.get('/profile/:user_id', function (req, res, next) {
+    var user_id = req.params.user_id;
+    if (!user_id) {
+        return res.status(500).send({ status: false, message: 'Missing/invalid params!' })
+    } else {
+        UsersSchema.findOne({ id: user_id }, function(reject, resolve) {
+            if (reject) {
+                return res.status(500).send({ status: false, message: 'Connection error!' })
+            }
+            if (!resolve) {
+                return res.status(404).send({ status: false, message: 'Unable to locate people within your location!' })
+            }
+            if (resolve) {
+                var user = resolve;
+                ExpertiseSchema.findOne({ user_id: user_id }, function(reject, resolve) {
+                    if (reject) {
+                        return res.status(500).send({ status: false, message: 'Connection error!' })
+                    }
+                    if (!resolve) {
+                        return res.status(200).send({ status: true, message: 'Successful', user })
+                    }
+                    if (resolve) {
+                        var expertise = resolve;
+                        EducationSchema.findOne({ user_id: user_id }, function(reject, resolve) {
+                            if (reject) {
+                                return res.status(500).send({ status: false, message: 'Connection error!' })
+                            }
+                            if (!resolve) {
+                                return res.status(200).send({ status: true, message: 'Successful', user, expertise })
+                            }
+                            if (resolve) {
+                                var education = resolve;
+                                EmploymentSchema.findOne({ user_id: user_id }, function(reject, resolve) {
+                                    if (reject) {
+                                        return res.status(500).send({ status: false, message: 'Connection error!' })
+                                    }
+                                    if (!resolve) {
+                                        return res.status(200).send({ status: true, message: 'Successful', user, expertise, education })
+                                    }
+                                    if (resolve) {
+                                        var employment = resolve;
+                                        return res.status(200).send({ status: true, message: 'Successful', user, expertise, education, employment })
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+            }
+        })
+    }
+})
+
 router.get('/find/:role/:longitude/:latitude', function (req, res, next) {
     var role = req.params.role;
     var longitude = req.params.longitude;
