@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 const pointSchema = new mongoose.Schema({
     type: {
       type: String,
+      default: 'Point',
       enum: ['Point'],
     },
     coordinates: {
@@ -30,6 +31,7 @@ var ProjectsSchema = new mongoose.Schema({
     end_date: String,
     status: { type: String, default: 'open' },
     country: String,
+    address_str: String,
     location: {
         type: pointSchema,
     },
