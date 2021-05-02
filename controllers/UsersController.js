@@ -115,7 +115,7 @@ router.get('/find/:role/:longitude/:latitude', function (req, res, next) {
     var role = req.params.role;
     var longitude = req.params.longitude;
     var latitude = req.params.latitude;
-    if (!radius || !longitude || !latitude) {
+    if (!role || !longitude || !latitude) {
         return res.status(500).send({ status: false, message: 'Missing/invalid params!' })
     } else {
         const location = { type: 'Point', coordinates: [longitude, latitude] };

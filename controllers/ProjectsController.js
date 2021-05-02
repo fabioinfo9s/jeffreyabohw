@@ -34,6 +34,24 @@ router.get('/:project_id', function (req, res) {
     })
 })
 
+router.get('/filter/:skill_set/:priority', function (req, res) {
+    var sort = req.params.sort || 'null';
+    var skill_set = req.params.skill_set || 'null';
+    var priority = req.params.priority || 'null';
+    ProjectsSchema.find({}, function(reject, resolve) {
+        if (reject) {
+            return res.status(500).send({ status: false, message: 'Connection error!' })
+        }
+        if (resolve) {
+            var projects = resolve;
+            var filter = projects.filter(entry => {
+                return entry.skill_set == skill_set.toLocaleLowerCase() || entry.priority == priority.toLocaleLowerCase();
+            })
+            return res.status(200).send({ status: true, message: 'Successful', data: filter })
+        }
+    })
+})
+
 router.get('/user/:user_id', function (req, res) {
     var user_id = req.params.user_id;
     ProjectsSchema.find({ user_id: user_id }, function(reject, resolve) {
