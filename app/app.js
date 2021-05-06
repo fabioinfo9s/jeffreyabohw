@@ -64,6 +64,8 @@ var WalletsController = require('../controllers/WalletsController');
 app.use('/api/v1/wallets', WalletsController);
 var JobOffersController = require('../controllers/JobOffersController');
 app.use('/api/v1/job-offers', JobOffersController);
+var RatingsController = require('../controllers/RatingsController');
+app.use('/api/v1/ratings', RatingsController);
 
 module.exports = app;
 
