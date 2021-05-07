@@ -1,6 +1,6 @@
 // server.js
 var app = require('./app');
-var port = process.env.PORT || 3100;
+var port = process.env.PORT || 3000;
 var http = require('http').createServer(app);
 var mailGun = require('../config/mailgun');
 
